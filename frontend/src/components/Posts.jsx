@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import SinglePostCard from "./SinglePostCard";
 import { useDispatch, useSelector } from "react-redux";
 import { handleGetAllData, handlePostNewPost } from "../redux/PostReducer/action";
-import { RootState } from "../redux/store";
+
 
 export default function Posts() {
   const [createPostModel, setCreatePostModel] = useState(false);
   const [categoryModel, setCategoryModel] = useState(false)
   const [inputValues, setInputValue] = useState({ title: "", content: "" })
   const [category, setCategory] = useState("Select Category")
-  const { token } = useSelector((store: RootState) => store.AuthReducer)
-  const { postData } = useSelector((store: RootState) => store.PostReducer);
+  const { token } = useSelector((store) => store.AuthReducer)
+  const { postData } = useSelector((store) => store.PostReducer);
   const dispatch = useDispatch()
 
-  const handleCategorySelect = (selectedCategory: string) => {
+  const handleCategorySelect = (selectedCategory) => {
     setCategory(selectedCategory);
     setCategoryModel(false);
   };
@@ -23,7 +23,7 @@ export default function Posts() {
     }
     dispatch(handlePostNewPost(token, newPost))
   }
-  const handleChangeInput: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
+  const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setInputValue(prev => {
       return {
@@ -76,7 +76,7 @@ export default function Posts() {
         </div>
         <div className="flex flex-col gap-5">
           {
-            postData?.map((post: any) => (
+            postData?.map((post) => (
               <SinglePostCard key={post._id} {...post} />
             ))
           }
